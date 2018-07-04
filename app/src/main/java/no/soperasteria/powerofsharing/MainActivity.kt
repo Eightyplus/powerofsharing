@@ -2,43 +2,30 @@ package no.soperasteria.powerofsharing
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.MotionEvent
-import org.jsoup.Jsoup
-import kotlin.concurrent.thread
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 
 class MainActivity : Activity() {
+
+    private var adapter: RecyclerAdapter? = null
+    private var recyclerView: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
 
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-
-        thread() {
-            readSpeakers()
-        }
-
-        return super.onTouchEvent(event)
-    }
-
-
-    fun readSpeakers(): List<Speaker> {
-        val speakers = mutableListOf<Speaker>()
-
-        Jsoup.connect("https://powerofsharing.no/").get().run {
-            select(".speakers__person").forEachIndexed { index, element ->
-                val name = element.select(".speakers__name").text()
-                val post = element.select(".speakers__post").text()
-                val photo = element.select(".speakers__photo").text()
-                val details = element.attr("href")
-
-                speakers.add(Speaker(name = name, post = post, photo = photo, details = details))
-
-                println(speakers.last())
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+        val adapter = RecyclerAdapter() {
+            runOnUiThread {
+                adapter!!.notifyDataSetChanged()
+                recyclerView.requestLayout()
             }
         }
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
 
-        return speakers
+        this.adapter = adapter
+        this.recyclerView = recyclerView
     }
+
 }

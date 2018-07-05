@@ -25,7 +25,7 @@ fun download(path: File, link: String, notify: () -> Unit) {
     }
 }
 
-fun load(file: File, link: String): Bitmap? {
+fun load(file: File): Bitmap? {
     return if (file.exists()) file.inputStream().use {
         BitmapFactory.decodeStream(it)
     } else null

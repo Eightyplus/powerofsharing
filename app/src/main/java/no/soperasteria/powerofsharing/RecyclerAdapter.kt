@@ -76,7 +76,7 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
         holder.name.text = speaker.name
         holder.post.text = speaker.post
 
-        val bitmap = getPhoto(position)
+        val bitmap = photos[position]
         if (bitmap != null) {
             holder.photo.setImageBitmap(bitmap)
         } else {
@@ -91,12 +91,6 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
                 }
             }
         }
-    }
-
-    private fun getPhoto(position: Int): Bitmap? {
-        return if (position < photos.size) {
-            photos[position]
-        } else null
     }
 
     override fun getItemCount(): Int {

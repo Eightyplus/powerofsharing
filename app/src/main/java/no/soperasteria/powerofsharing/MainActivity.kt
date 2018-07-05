@@ -17,7 +17,7 @@ class MainActivity : Activity() {
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         val adapter = RecyclerAdapter(applicationContext) {
             runOnUiThread {
-                adapter!!.notifyDataSetChanged()
+                adapter?.notifyDataSetChanged()
                 recyclerView.requestLayout()
             }
         }

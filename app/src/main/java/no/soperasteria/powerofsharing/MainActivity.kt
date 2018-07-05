@@ -1,6 +1,6 @@
 package no.soperasteria.powerofsharing
 
-import android.app.Activity
+import android.support.v7.app.AppCompatActivity as Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView

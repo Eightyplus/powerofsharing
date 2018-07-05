@@ -79,11 +79,13 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
             thread {
                 val file = photoFile(applicationPath, fileForLink(speaker.photo))
                 val bmp = load(file = file)
-                if (bmp != null) {
-                    photos[speaker.name] = bmp
-                    notify()
-                } else {
-                    download(file, speaker.photo, notify)
+
+                when(bmp) {
+                    is Bitmap ->  {
+                        photos[speaker.name] = bmp
+                        notify()
+                    }
+                    null -> download(file, speaker.photo, notify)
                 }
             }
         }

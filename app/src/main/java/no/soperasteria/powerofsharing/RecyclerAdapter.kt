@@ -18,7 +18,7 @@ import kotlin.concurrent.thread
 class RecyclerAdapter(context: Context, private val notify: () -> Unit) : RecyclerView.Adapter<RecyclerAdapter.AdapterHolder>() {
 
     private val speakers = mutableListOf<Speaker>()
-    private val photos = HashMap<Int, Bitmap>()
+    private val photos = HashMap<String, Bitmap>()
     private val applicationPath = context.filesDir
 
     init {
@@ -72,7 +72,7 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
         holder.name.text = speaker.name
         holder.post.text = speaker.post
 
-        val bitmap = photos[position]
+        val bitmap = photos[speaker.name]
         if (bitmap != null) {
             holder.photo.setImageBitmap(bitmap)
         } else {
@@ -80,7 +80,7 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
                 val file = photoFile(applicationPath, fileForLink(speaker.photo))
                 val bmp = load(file = file, link = speaker.photo)
                 if (bmp != null) {
-                    photos[position] = bmp
+                    photos[speaker.name] = bmp
                     notify()
                 } else {
                     download(file, speaker.photo, notify)

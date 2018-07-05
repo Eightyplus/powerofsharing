@@ -22,7 +22,9 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
     private val applicationPath = context.filesDir
 
     init {
-        getItems()
+        thread {
+            readSpeakers()
+        }
     }
 
     private fun readSpeakers() {
@@ -54,12 +56,6 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
 
         override fun onClick(v: View) {
 
-        }
-    }
-
-    private fun getItems() {
-        thread {
-            readSpeakers()
         }
     }
 

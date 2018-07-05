@@ -2,7 +2,6 @@ package no.soperasteria.powerofsharing
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import org.jsoup.Jsoup
-import java.io.File
-import java.io.FileOutputStream
-import java.net.URL
 import kotlin.concurrent.thread
 
 /**
@@ -85,12 +81,13 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
             holder.photo.setImageBitmap(bitmap)
         } else {
             thread {
-                val bmp = load(speaker.photo)
+                val file = photoFile(applicationPath, fileForLink(speaker.photo))
+                val bmp = load(file = file, link = speaker.photo)
                 if (bmp != null) {
                     photos[position] = bmp
                     notify()
                 } else {
-                    download(speaker.photo)
+                    download(file, speaker.photo, notify)
                 }
             }
         }
@@ -109,30 +106,6 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
     private fun getItem(position: Int): Speaker? {
         return if (0 < position || position <= itemCount) {
             speakers[position]
-        } else null
-    }
-
-    private fun photoFile(filename: String): File {
-        return File(applicationPath, File.separator + filename)
-    }
-
-    private fun download(link: String) {
-        val input = URL(link).openStream()
-        val path = link.substringAfterLast("/")
-        val output = FileOutputStream(photoFile(path))
-        input.use { _ ->
-            output.use { _ ->
-                input.copyTo(output)
-                notify()
-            }
-        }
-    }
-
-    private fun load(link: String): Bitmap? {
-        val path = link.substringAfterLast("/")
-        val file = photoFile(path)
-        return if (file.exists()) file.inputStream().use {
-            BitmapFactory.decodeStream(it)
         } else null
     }
 }

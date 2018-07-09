@@ -16,11 +16,11 @@ class MainActivity : Activity() {
         speakersAdapter = RecyclerAdapter(applicationContext) {
             runOnUiThread {
                 speakersAdapter.notifyDataSetChanged()
-                recyclerView.requestLayout()
+                recycler_view.requestLayout()
             }
         }
 
-        recyclerView.apply {
+        recycler_view.apply {
             this.adapter = speakersAdapter
             layoutManager = LinearLayoutManager(applicationContext)
         }

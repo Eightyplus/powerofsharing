@@ -3,12 +3,11 @@ package no.soperasteria.powerofsharing
 import android.support.v7.app.AppCompatActivity as Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
 
-    private var speakersAdapter: RecyclerAdapter? = null
-    private var recyclerView: RecyclerView? = null
+    private lateinit var speakersAdapter: RecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,12 +15,12 @@ class MainActivity : Activity() {
 
         speakersAdapter = RecyclerAdapter(applicationContext) {
             runOnUiThread {
-                speakersAdapter?.notifyDataSetChanged()
-                recyclerView?.requestLayout()
+                speakersAdapter.notifyDataSetChanged()
+                recyclerView.requestLayout()
             }
         }
 
-        recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply {
+        recyclerView.apply {
             this.adapter = speakersAdapter
             layoutManager = LinearLayoutManager(applicationContext)
         }

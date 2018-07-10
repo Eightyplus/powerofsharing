@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PowerOfSharing</string>
     <string name="image_of_speaker">Image of speaker</string>
+    <string name="title_home">Start</string>
+    <string name="title_speakers">Speakers</string>
+    <string name="title_schedule">Schedule</string>
+    <string name="speaker_image">Image of speaker</string>
+    <string name="error_showing_speaker">Error when trying to show details of speaker</string>
 </resources>

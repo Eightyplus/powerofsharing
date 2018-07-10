@@ -8,14 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import org.jsoup.Jsoup
 import kotlin.concurrent.thread
 
 /**
  * RecyclerView adapter extended with project-specific required methods.
  */
 
-class RecyclerAdapter(context: Context, private val notify: () -> Unit) : RecyclerView.Adapter<RecyclerAdapter.AdapterHolder>() {
+class RecyclerAdapter(context: Context,
+                      private val notify: () -> Unit,
+                      private val onClick: (Speaker?) -> Unit) :
+        RecyclerView.Adapter<RecyclerAdapter.AdapterHolder>() {
 
     private val speakers = mutableListOf<Speaker>()
     private val photos = HashMap<String, Bitmap>()
@@ -23,25 +25,9 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
 
     init {
         thread {
-            readSpeakers()
+            speakers.addAll(readSpeakers())
+            notify()
         }
-    }
-
-    private fun readSpeakers() {
-
-        Jsoup.connect("https://powerofsharing.no/").get().run {
-            select(".speakers__person").forEachIndexed { _, element ->
-                val name = element.select(".speakers__name").text()
-                val post = element.select(".speakers__post").text()
-                val style = element.select(".speakers__photo").attr("style")
-                val photo = style.substring(style.indexOf("https://"), style.indexOf(".jpg") + 4)
-                val details = element.attr("href")
-
-                speakers.add(Speaker(name = name, post = post, photo = photo, details = details))
-            }
-        }
-
-        notify()
     }
 
     inner class AdapterHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -55,7 +41,7 @@ class RecyclerAdapter(context: Context, private val notify: () -> Unit) : Recycl
         }
 
         override fun onClick(v: View) {
-
+            onClick(getItem(adapterPosition))
         }
     }
 

@@ -2,6 +2,8 @@ package no.soperasteria.powerofsharing
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
+import org.jsoup.Jsoup
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -29,4 +31,32 @@ fun load(file: File): Bitmap? {
     return if (file.exists()) file.inputStream().use {
         BitmapFactory.decodeStream(it)
     } else null
+}
+
+fun drawableFor(file: File): Drawable? {
+    return if (file.exists()) file.inputStream().use { inputStream ->
+        Drawable.createFromStream(inputStream, null)
+    } else null
+}
+
+fun readSpeakers(): List<Speaker> {
+    val speakers = mutableListOf<Speaker>()
+    Jsoup.connect("https://powerofsharing.no/").get().run {
+        select(".speakers__person").forEachIndexed { _, element ->
+            val name = element.select(".speakers__name").text()
+            val post = element.select(".speakers__post").text()
+            val style = element.select(".speakers__photo").attr("style")
+            val photo = style.substring(style.indexOf("https://"), style.indexOf(".jpg") + 4)
+            val detailsUrl = element.attr("href")
+
+            Jsoup.connect(detailsUrl).get().run {
+                val details = select(".speaker-profile .content").map{
+                    it.text()
+                }.reduce { a,b -> "$a$b" }
+                speakers.add(Speaker(name = name, post = post, photo = photo, details = details))
+            }
+
+        }
+    }
+    return speakers
 }

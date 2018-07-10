@@ -1,12 +1,12 @@
 package no.soperasteria.powerofsharing
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v7.app.AppCompatActivity as Activity
 import kotlinx.android.synthetic.main.activity_details.*
 
 const val EXTRA_SPEAKER = "speaker"
 
-class SpeakerDetailsActivity : AppCompatActivity() {
+class SpeakerDetailsActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

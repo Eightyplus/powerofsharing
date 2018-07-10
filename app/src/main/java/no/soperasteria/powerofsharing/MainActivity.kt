@@ -6,6 +6,11 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import no.soperasteria.powerofsharing.fragment.SplashFragment
+import java.util.*
+import kotlin.concurrent.schedule
+
+const val FRAGMENT_SPLASH = "SPLASH"
 
 class MainActivity : Activity() {
 
@@ -20,6 +25,11 @@ class MainActivity : Activity() {
         recycler_view.apply {
             this.adapter = speakersAdapter
             layoutManager = LinearLayoutManager(applicationContext)
+        }
+
+        showHideSplash()
+        Timer().schedule(3000) {
+            showHideSplash()
         }
     }
 
@@ -41,4 +51,13 @@ class MainActivity : Activity() {
 
     }
 
+    private fun showHideSplash() {
+        supportFragmentManager.beginTransaction().apply {
+            supportFragmentManager.findFragmentByTag(FRAGMENT_SPLASH)?.let {
+                remove(it)
+            } ?: run {
+                replace(R.id.splash, SplashFragment(), FRAGMENT_SPLASH)
+            }
+        }.commit()
+    }
 }

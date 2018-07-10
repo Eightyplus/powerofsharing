@@ -6,4 +6,5 @@
     <string name="title_schedule">Schedule</string>
     <string name="speaker_image">Image of speaker</string>
     <string name="error_showing_speaker">Error when trying to show details of speaker</string>
+    <string name="splash_image">Splash image</string>
 </resources>

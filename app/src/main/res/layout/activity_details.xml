@@ -14,34 +14,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/background_speaker"
             android:contentDescription="@string/speaker_image"
             />
 
         <TextView
             android:id="@+id/speaker_name"
+            android:layout_above="@id/speaker_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse"
-            android:layout_alignBottom="@id/speaker_image"
+            android:background="@color/colorPrimary"
             />
         <TextView
             android:id="@+id/speaker_post"
-            android:layout_above="@id/speaker_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorSecondaryDark"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large.Inverse"
+            android:layout_alignBottom="@id/speaker_image"
             />
 
-        <TextView
-            android:id="@+id/speaker_details"
-            android:layout_width="wrap_content"
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:layout_below="@id/speaker_image"
-            />
+            android:layout_below="@id/speaker_image">
+            <TextView
+                android:id="@+id/speaker_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_below="@id/speaker_image"
+                />
+        </android.support.v4.widget.NestedScrollView>
 
     </RelativeLayout>
 

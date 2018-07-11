@@ -18,10 +18,11 @@ class MainActivity : Activity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_start -> {
+                showHideSpeakers()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_speakers -> {
-                showHideSpeakers()
+                showHideSpeakers(true)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_schedule -> {
@@ -47,13 +48,11 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun showHideSpeakers(hide: Boolean = false) {
+    private fun showHideSpeakers(show: Boolean = false) {
         supportFragmentManager.beginTransaction().apply {
             supportFragmentManager.findFragmentByTag(FRAGMENT_SPEAKERS)?.let {
-                if (hide) {
-                    remove(it)
-                }
-            } ?: run {
+                remove(it)
+            } ?: if (show) {
                 replace(R.id.main, SpeakersFragment(), FRAGMENT_SPEAKERS)
             }
         }.commit()

@@ -63,6 +63,7 @@ class MainActivity : Activity() {
 
     private fun showHideSplash() {
         supportFragmentManager.beginTransaction().apply {
+            setCustomAnimations(R.anim.splash_enter, R.anim.splash_exit);
             supportFragmentManager.findFragmentByTag(FRAGMENT_SPLASH)?.let {
                 remove(it)
             } ?: run {

@@ -34,6 +34,7 @@ class SpeakersFragment : DialogFragment() {
         activity?.runOnUiThread {
             speakersAdapter.notifyDataSetChanged()
             recycler_view.requestLayout()
+            spinner.visibility = View.GONE
         }
     }
 

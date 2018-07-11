@@ -1,31 +1,40 @@
 package no.soperasteria.powerofsharing
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity as Activity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
+import android.support.design.widget.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import no.soperasteria.powerofsharing.fragment.SpeakersFragment
 import no.soperasteria.powerofsharing.fragment.SplashFragment
 import java.util.*
 import kotlin.concurrent.schedule
+import android.support.v7.app.AppCompatActivity as Activity
 
 const val FRAGMENT_SPLASH = "SPLASH"
+const val FRAGMENT_SPEAKERS = "SPEAKERS"
 
 class MainActivity : Activity() {
 
-    private lateinit var speakersAdapter: RecyclerAdapter
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_start -> {
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_speakers -> {
+                showHideSpeakers()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_schedule -> {
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        speakersAdapter = RecyclerAdapter(applicationContext, ::update, ::show)
-
-        recycler_view.apply {
-            this.adapter = speakersAdapter
-            layoutManager = LinearLayoutManager(applicationContext)
-        }
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         showHideSplash()
         Timer().schedule(3000) {
@@ -33,22 +42,14 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun update() {
-        runOnUiThread {
-            speakersAdapter.notifyDataSetChanged()
-            recycler_view.requestLayout()
-        }
-    }
-
-    private fun show(speaker: Speaker?) {
-        if (speaker != null) {
-            startActivity(Intent(this, SpeakerDetailsActivity::class.java).apply {
-                putExtra(EXTRA_SPEAKER, speaker)
-            })
-        } else {
-            Toast.makeText(applicationContext, R.string.error_showing_speaker, Toast.LENGTH_LONG).show()
-        }
-
+    private fun showHideSpeakers() {
+        supportFragmentManager.beginTransaction().apply {
+            supportFragmentManager.findFragmentByTag(FRAGMENT_SPEAKERS)?.let {
+                remove(it)
+            } ?: run {
+                replace(R.id.main, SpeakersFragment(), FRAGMENT_SPEAKERS)
+            }
+        }.commit()
     }
 
     private fun showHideSplash() {

@@ -13,8 +13,7 @@ class ExampleUnitTest {
 
     @Test
     fun speaker_isParsed() {
-        val speakers = MainActivity().readSpeakers()
-
+        val speakers = fetchSpeakers()
 
         for (speaker in speakers)
             println(speaker)

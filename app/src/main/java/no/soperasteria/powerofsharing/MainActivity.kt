@@ -42,10 +42,12 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun showHideSpeakers() {
+    private fun showHideSpeakers(hide: Boolean = false) {
         supportFragmentManager.beginTransaction().apply {
             supportFragmentManager.findFragmentByTag(FRAGMENT_SPEAKERS)?.let {
-                remove(it)
+                if (hide) {
+                    remove(it)
+                }
             } ?: run {
                 replace(R.id.main, SpeakersFragment(), FRAGMENT_SPEAKERS)
             }

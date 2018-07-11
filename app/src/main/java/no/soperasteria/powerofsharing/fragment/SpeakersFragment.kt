@@ -2,6 +2,8 @@ package no.soperasteria.powerofsharing.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.v4.app.DialogFragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -31,7 +33,7 @@ class SpeakersFragment : DialogFragment() {
     }
 
     private fun update() {
-        activity?.runOnUiThread {
+        Handler(Looper.getMainLooper()).post {
             speakersAdapter.notifyDataSetChanged()
             recycler_view.requestLayout()
             spinner.visibility = View.GONE

@@ -3,16 +3,11 @@ package no.soperasteria.powerofsharing
 import android.content.Context
 import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import no.soperasteria.powerofsharing.data.database
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.parseList
-import org.jetbrains.anko.db.select
 import kotlin.concurrent.thread
 
 /**
@@ -30,12 +25,7 @@ class RecyclerAdapter(context: Context,
 
     init {
         thread {
-            Log.d("RA", "START")
-            context.database.use {
-                speakers.addAll(select("Speaker").exec {
-                    parseList(classParser<Speaker>())
-                })
-            }
+            speakers.addAll(loadSpeakers(context))
             notify()
         }
     }

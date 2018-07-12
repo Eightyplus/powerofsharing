@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -39,14 +40,18 @@ class CounterFragment : DialogFragment() {
     }
 
     private fun visualize(text: String) {
+        val animationSet = AnimationSet(true)
+
         val chars: CharArray = text.toCharArray()
         for (i in 0..(chars.size-1)) {
             val char = chars[i].toString()
+            val textView = textViewFor(i)
 
-            if (textViewFor(i).text != char) {
-                animateText(textViewFor(i), char)
+            if (textView.text != char) {
+                animationSet.addAnimation(animateText(textView, char))
             }
         }
+        animationSet.start()
     }
 
     private fun textViewFor(index: Int): TextView {
@@ -63,12 +68,13 @@ class CounterFragment : DialogFragment() {
                 textViews.add(this)
             }
 
-    private fun animateText(textView: TextView, text: String) {
+    private fun animateText(textView: TextView, text: String): TranslateAnimation {
         val animation = TranslateAnimation(0f, 0f, -textView.height.toFloat(), 0f).apply {
             duration = 750
         }
-        textView.startAnimation(animation)
+        textView.animation = animation
         textView.text = text
+        return animation
     }
 
 }

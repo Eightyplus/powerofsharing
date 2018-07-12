@@ -16,7 +16,7 @@ import kotlin.concurrent.fixedRateTimer
 class StartFragment : DialogFragment() {
 
     private val mHandler = Handler(Looper.getMainLooper())
-    private val dateFormatter = SimpleDateFormat("D-HH-mm-ss", Locale.getDefault())
+    private val dateFormatter = SimpleDateFormat("D-HH:mm:ss", Locale.getDefault())
 
     private var timer: Timer? = null
     private val calendar: Calendar = Calendar.getInstance().apply {

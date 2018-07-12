@@ -17,22 +17,26 @@ const val FRAGMENT_START = "START"
 const val FRAGMENT_SPEAKERS = "SPEAKERS"
 
 class MainActivity : Activity() {
+    private fun showStart() = showFragment(FRAGMENT_START, StartFragment())
+    private fun hideStart() = hideFragment(FRAGMENT_START)
+    private fun showSpeakers() = showFragment(FRAGMENT_SPEAKERS, SpeakersFragment())
+    private fun hideSpeakers() = hideFragment(FRAGMENT_SPEAKERS)
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_start -> {
-                showHideStart(true)
-                showHideSpeakers()
+                showStart()
+                hideSpeakers()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_speakers -> {
-                showHideStart()
-                showHideSpeakers(true)
+                hideStart()
+                showSpeakers()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_schedule -> {
-                showHideStart()
-                showHideSpeakers()
+                hideStart()
+                hideSpeakers()
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -52,7 +56,7 @@ class MainActivity : Activity() {
         showHideSplash()
         Timer().schedule(3000) {
             showHideSplash()
-            showHideStart(true)
+            showStart()
             runOnUiThread {
                 navigation.visibility = View.VISIBLE
             }
@@ -66,33 +70,6 @@ class MainActivity : Activity() {
                 remove(it)
             } ?: run {
                 replace(R.id.splash, SplashFragment(), FRAGMENT_SPLASH)
-            }
-        }.commit()
-    }
-
-
-    private fun showHideStart(show: Boolean = false) {
-        supportFragmentManager.beginTransaction().apply {
-            if (show) {
-                supportFragmentManager.findFragmentByTag(FRAGMENT_START)
-                        ?: replace(R.id.main, StartFragment(), FRAGMENT_START)
-            } else {
-                supportFragmentManager.findFragmentByTag(FRAGMENT_START)?.let {
-                    remove(it)
-                }
-            }
-        }.commit()
-    }
-
-    private fun showHideSpeakers(show: Boolean = false) {
-        supportFragmentManager.beginTransaction().apply {
-            if (show) {
-                supportFragmentManager.findFragmentByTag(FRAGMENT_SPEAKERS)
-                        ?: replace(R.id.main, SpeakersFragment(), FRAGMENT_SPEAKERS)
-            } else {
-                supportFragmentManager.findFragmentByTag(FRAGMENT_SPEAKERS)?.let {
-                    remove(it)
-                }
             }
         }.commit()
     }

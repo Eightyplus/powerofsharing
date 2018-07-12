@@ -50,18 +50,15 @@ fun drawableFor(file: File): Drawable? {
 
 @Synchronized
 fun readSpeakers(context: Context) {
-    fetchSpeakers().let { speakers ->
-        context.database.use {
-            for (speaker in speakers) {
-
-                replace("Speaker",
-                        "name" to speaker.name,
-                        "post" to speaker.post,
-                        "photo" to speaker.photo,
-                        "details" to speaker.details)
-            }
-
+    context.database.use {
+        for (speaker in fetchSpeakers()) {
+            replace("Speaker",
+                    "name" to speaker.name,
+                    "post" to speaker.post,
+                    "photo" to speaker.photo,
+                    "details" to speaker.details)
         }
+
     }
     Log.d(TAG, "Done reading speakers to database")
 }

@@ -9,12 +9,21 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_start.*
 import no.soperasteria.powerofsharing.R
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
 class StartFragment : DialogFragment() {
 
-    var timer: Timer? = null
+    private val mHandler = Handler(Looper.getMainLooper())
+    private val dateFormatter = SimpleDateFormat("D-HH-mm-ss", Locale.getDefault())
+
+    private var timer: Timer? = null
+    private val calendar: Calendar = Calendar.getInstance().apply {
+        set(Calendar.DAY_OF_MONTH, 23)
+        set(Calendar.MONTH, 4)
+        set(Calendar.YEAR, 0)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_start, container, false)
@@ -23,13 +32,15 @@ class StartFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var cnt = 0
-        val mHandler = Handler(Looper.getMainLooper())
-        this.timer = fixedRateTimer("counter", true, Date(), 1000) {
-            mHandler.post {
-                counter?.text = "Tick $cnt"
-            }
-            cnt++
+        timer = fixedRateTimer("counter", true, Date(), 1000) {
+            calendar.add(Calendar.SECOND, -1)
+            update(dateFormatter.format(calendar.time))
+        }
+    }
+
+    private fun update(text: String) {
+        mHandler.post {
+            counter.text = text
         }
     }
 

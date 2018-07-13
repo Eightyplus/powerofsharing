@@ -22,6 +22,12 @@ class StartFragment : DialogFragment() {
         set(Calendar.YEAR, 0)
     }
 
+    private val startTime: Date by lazy {
+        Calendar.getInstance().apply {
+            add(Calendar.SECOND, 5)
+        }.time
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_start, container, false)
     }
@@ -30,9 +36,9 @@ class StartFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val counter = childFragmentManager.findFragmentById(R.id.counter) as CounterFragment
-        counter.init(dateFormatter.format(calendar.time))
+        counter.init(getString(R.string.welcome))
 
-        timer = fixedRateTimer("counter", true, Date(), 1000) {
+        timer = fixedRateTimer("counter", true, startTime, 1000) {
             calendar.add(Calendar.SECOND, -1)
             counter.text = dateFormatter.format(calendar.time)
         }

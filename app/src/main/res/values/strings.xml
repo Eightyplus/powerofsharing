@@ -8,4 +8,5 @@
     <string name="error_showing_speaker">Error when trying to show details of speaker</string>
     <string name="splash_image">Splash image</string>
     <string name="counter_text">Days, hours, minutes and seconds countdown</string>
+    <string name="welcome" formatted="true">_Welcome__</string>
 </resources>

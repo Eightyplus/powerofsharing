@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:propertyName="alpha"
+        android:startOffset="@integer/delayDuration"
+        android:duration="@integer/halfDuration" />
+    <objectAnimator
+        android:valueFrom="180"
+        android:valueTo="0"
+        android:propertyName="rotationX"
+        android:duration="@integer/duration"
+        />
+    <objectAnimator
+        android:propertyName="translationY"
+        android:valueFrom="0"
+        android:valueTo="@dimen/counterFlip"
+        android:duration="@integer/duration"
+        />
+</set>

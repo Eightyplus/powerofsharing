@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="counterHeight">40sp</dimen>
+    <dimen name="counterMargin">1dp</dimen>
+    <dimen name="counterPadding">1dp</dimen>
+    <dimen name="counterWidth">30dp</dimen>
+    <dimen name="counterHeight">50dp</dimen>
+    <dimen name="counterFlip">52dp</dimen>
+    <dimen name="counterTextSize">40sp</dimen>
+    <dimen name="counterHeightTotal">104dp</dimen>
 
+    <integer name="delayDuration">100</integer>
+    <integer name="halfDuration">200</integer>
+    <integer name="duration">500</integer>
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,20 +8,25 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TextCount" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">@dimen/counterHeight</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:typeface">sans</item>
-        <item name="android:background">@color/black</item>
+    <style name="d">
+        <item name="android:layout_alignParentBottom">true</item>
     </style>
 
-    <style name="TextCountHidden" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">@dimen/counterHeight</item>
-        <item name="android:textColor">@color/black</item>
+    <style name="TextCount" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/counterTextSize</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">@dimen/counterWidth</item>
+        <item name="android:layout_height">@dimen/counterHeight</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">sans</item>
         <item name="android:background">@color/black</item>
+        <item name="android:layout_margin">@dimen/counterMargin</item>
+        <item name="android:padding">@dimen/counterPadding</item>
+    </style>
+
+    <style name="TextCountHidden" parent="TextCount">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
 </resources>

@@ -16,10 +16,18 @@ class StartFragment : DialogFragment() {
     private val dateFormatter = SimpleDateFormat(datePattern, Locale.getDefault())
 
     private var timer: Timer? = null
+
+    // TODO fetch calendar date dynamically
     private val calendar: Calendar = Calendar.getInstance().apply {
         set(Calendar.DAY_OF_MONTH, 23)
         set(Calendar.MONTH, 4)
-        set(Calendar.YEAR, 0)
+        set(Calendar.HOUR, 9)
+        add(Calendar.YEAR, 1 )
+    }
+    private val timestamp by lazy {
+        Calendar.getInstance().apply {
+            timeInMillis = calendar.timeInMillis - timeInMillis
+        }
     }
 
     private val startTime: Date by lazy {
@@ -39,8 +47,8 @@ class StartFragment : DialogFragment() {
         counter.init(getString(R.string.welcome))
 
         timer = fixedRateTimer("counter", true, startTime, 1000) {
-            calendar.add(Calendar.SECOND, -1)
-            counter.text = dateFormatter.format(calendar.time)
+            timestamp.add(Calendar.SECOND, -1)
+            counter.text = dateFormatter.format(timestamp.time)
         }
     }
 
